@@ -8,8 +8,8 @@ class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -25,20 +25,20 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 100,
             ),
-            Text("Login"),
+            const Text("Login"),
             TextField(
-              controller: _emailController,
+              controller: emailController,
             ),
             TextField(
-              controller: _passwordController,
+              controller: passwordController,
             ),
             const SizedBox(
               height: 20,
             ),
             ElevatedButton(
                 onPressed: () {
-                  log(_emailController.text);
-                  log(_passwordController.text);
+                  log(emailController.text);
+                  log(passwordController.text);
                 },
                 child: const Text('login'))
           ],
