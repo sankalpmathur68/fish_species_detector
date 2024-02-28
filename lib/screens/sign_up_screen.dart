@@ -60,13 +60,18 @@ Commenting All previously written code and making the signup page similar to the
 
 //  statefull  or stateless
 
-import 'dart:convert';
-import 'dart:developer';
+// import 'dart:convert';
+// import 'dart:developer';
 
-import 'package:fish_species_detector/screens/sign_up_screen.dart';
+// import 'package:fish_species_detector/screens/sign_up_screen.dart';
+// import 'package:fish_species_detector/services/auth.dart';
+
+import 'package:fish_species_detector/main.dart';
 import 'package:fish_species_detector/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:country_code_picker/country_code_picker.dart';
+// import 'package:http/http.dart' as http;
+// import "package:country_picker/country_picker.dart";
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -77,11 +82,19 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   //  fact = "";
-
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _countryController = TextEditingController();
+  final TextEditingController _stateController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool clicked = false;
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -95,23 +108,19 @@ class _SignUpPageState extends State<SignUpPage> {
               // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Image.asset(
-                //   "assets/images/logo.png",
-                //   height: 300,
-                // ),
-                // const SizedBox(
-                //   height: 30,
-                // ),
                 // Adding Style to the * Text Widget * using #.. style: TextStyle(required styling) ..#
                 Align(
                   //wrapping the *Text Widget* with * Align Widget * and gave alignment -> centerLeft
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Register",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Color(int.parse("0XFF265073")),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 // Adding style to Both the * TextField Widget * using #.. decoration: InputDecoration(req styling) ..#
@@ -119,16 +128,42 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     Flexible(
                       child: TextField(
-                        controller: _emailController,
+                        controller: _firstNameController,
                         decoration: InputDecoration(
-                            labelText: "Email",
+                            labelText: "First Name",
+                            labelStyle: TextStyle(
+                                color: Color(int.parse("0XFF265073"))),
                             isDense: true,
                             filled: true,
                             fillColor: Colors.grey.shade300,
                             hoverColor: Colors.grey,
                             focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: Colors.blueAccent, width: 2.0),
+                                  color: Colors.teal, width: 2.0),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Flexible(
+                      child: TextField(
+                        controller: _lastNameController,
+                        decoration: InputDecoration(
+                            labelText: "Last Name",
+                            labelStyle: TextStyle(
+                                color: Color(int.parse("0XFF265073"))),
+                            isDense: true,
+                            filled: true,
+                            fillColor: Colors.grey.shade300,
+                            hoverColor: Colors.grey,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.teal, width: 2.0),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             border: OutlineInputBorder(
@@ -138,7 +173,139 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                      labelText: "Email",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      hoverColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                      labelText: "Username",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      hoverColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                      labelText: "Phone",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      hoverColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _countryController,
+                  decoration: InputDecoration(
+                      labelText: "Country",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      hoverColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _stateController,
+                  decoration: InputDecoration(
+                      labelText: "State",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      hoverColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _cityController,
+                  decoration: InputDecoration(
+                      labelText: "City",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
+                      isDense: true,
+                      filled: true,
+                      fillColor: Colors.grey.shade300,
+                      hoverColor: Colors.grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
                   height: 10,
                 ),
                 TextField(
@@ -146,34 +313,38 @@ class _SignUpPageState extends State<SignUpPage> {
                   obscureText: true, //obsecuring text for password
                   decoration: InputDecoration(
                       labelText: "Create Password",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
                       isDense: true,
                       filled: true,
                       fillColor: Colors.grey.shade300,
                       hoverColor: Colors.grey,
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Colors.blueAccent, width: 2.0),
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(10))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextField(
-                  controller: _passwordController,
+                  controller: _rePasswordController,
                   obscureText: true, //obsecuring text for password
                   decoration: InputDecoration(
                       labelText: "Re-Enter Password",
+                      labelStyle:
+                          TextStyle(color: Color(int.parse("0XFF265073"))),
                       isDense: true,
                       filled: true,
                       fillColor: Colors.grey.shade300,
                       hoverColor: Colors.grey,
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Colors.blueAccent, width: 2.0),
+                        borderSide:
+                            const BorderSide(color: Colors.teal, width: 2.0),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       border: OutlineInputBorder(
@@ -181,50 +352,65 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(10))),
                 ),
                 const SizedBox(
-                  height: 20,
-                ),
-                const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 //Adding registration page navigation
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an Account"),
+                    const Text("Already have an Account"),
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          // Navigator.push(context,
-                          //     MaterialPageRoute(builder: (BuildContext context) {
-                          //   // return const Signuppage();
-                          // }));
                         },
-                        child: Text(
+                        child: const Text(
                           "Login",
-                          style: TextStyle(color: Colors.blueAccent),
+                          style: TextStyle(color: Colors.teal),
                         )),
                   ],
                 ),
                 // adding style to the * ElevatedButton * using  #.. style: ElevatedButton.styleFrom(styling..)  ..#
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.black, elevation: 3),
+                        backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        shadowColor: Colors.teal,
+                        elevation: 3),
                     onPressed: () async {
-                      // Authentication().register_user("username", "password");
-                      // final response =
-                      //     await http.get(Uri.parse("http://18.218.169.6:8000/"));
-                      // log(response.statusCode.toString());
-                      // final data = jsonDecode(response.body);
-                      // setState(() {
-                      //   //  final  fact = data;
-                      // });
-                      // log("$fact");
+                      setState(() {
+                        clicked = true;
+                      });
+                      User user = User(
+                          score: '0',
+                          username: _usernameController.text,
+                          password: _passwordController.text,
+                          city: _cityController.text,
+                          confirm_pass: _rePasswordController.text,
+                          country: _countryController.text,
+                          email: _emailController.text,
+                          first_name: _firstNameController.text,
+                          last_name: _lastNameController.text,
+                          phone: _phoneController.text,
+                          state: _stateController.text);
+                      final bool response =
+                          await Authentication().register_user(user, context);
+                      if (!response) {
+                        setState(() {
+                          clicked = false;
+                        });
+                      } else {
+                        await main();
+                        Navigator.pop(context);
+                      }
                     },
-                    child: const Text(
-                      'Register',
-                      style: TextStyle(color: Colors.black),
-                    ))
+                    child: clicked
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            'Register',
+                            style: TextStyle(color: Colors.white),
+                          ))
               ],
             ),
           ),

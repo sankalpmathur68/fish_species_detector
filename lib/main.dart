@@ -1,3 +1,7 @@
+
+import 'package:fish_species_detector/screens/home_page.dart';
+import 'package:fish_species_detector/services/auth.dart';
+
 import 'screens/login_screen.dart';
 import 'package:flutter/material.dart'
     show
@@ -8,15 +12,21 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         ThemeData,
         Widget,
+        WidgetsFlutterBinding,
         runApp;
 //import 'screens/sign_up_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final user = await Authentication().isUserLoggedIn();
+  runApp(MyApp(
+    user: user,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final user;
+  const MyApp({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +37,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: user != null
+          ? Homepage(
+              user: user,
+            )
+          : const LoginPage(),
     );
     return materialApp;
   }
