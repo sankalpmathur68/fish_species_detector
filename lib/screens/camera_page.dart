@@ -16,6 +16,7 @@ class _CameraScreenState extends State<CameraScreen> {
   String? token = '';
   bool clicked = false;
   int score = 0;
+  String species = '';
   Authentication auth = Authentication()..isUserLoggedIn();
   PredictionServices predictionServices = PredictionServices();
   int temp_score = 0;
@@ -36,13 +37,25 @@ class _CameraScreenState extends State<CameraScreen> {
               score != 0
                   ? Padding(
                       padding: const EdgeInsets.all(18.0),
-                      child: Text(
-                        "+$score",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 60,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green),
+                      child: Column(
+                        children: [
+                          Text(
+                            "+$score",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 60,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
+                          Text(
+                            "$species",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.teal),
+                          ),
+                        ],
                       ),
                     )
                   : _imageFile == null
@@ -92,8 +105,10 @@ class _CameraScreenState extends State<CameraScreen> {
 
                     setState(() {
                       _imageFile = null;
-                      score =
-                          response != null ? int.parse(response['score']) : 0;
+                      log("response $response");
+                      // score =
+                      //     response != null ? int.parse(response['score']) : 0;
+                      // species = response != null ? response['prediction'] : '';
                       temp_score += score;
                       clicked = false;
                     });
